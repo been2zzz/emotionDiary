@@ -8,10 +8,17 @@ import Diary from './pages/Diary';
 
 // COMPONENTS
 import MyButton from './components/MyButton';
+import MyHeader from './components/MyHeader';
+
 function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <MyHeader
+          headText={'App'}
+          leftChild={<MyButton text={'back'} />}
+          rightChild={<MyButton text={'right'} />}
+        />
         <h2>App.js</h2>
         <MyButton
           text={'BUTTON'}
