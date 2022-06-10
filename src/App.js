@@ -55,6 +55,12 @@ const dummyData = [
     content: 'diary 3',
     date: 1654839796061,
   },
+  {
+    id: 4,
+    emotion: 5,
+    content: 'diary_5',
+    date: 1654839796061,
+  },
 ];
 
 function App() {
