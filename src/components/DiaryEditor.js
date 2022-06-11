@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DiaryDispatchContext } from './../App';
 
@@ -48,7 +48,7 @@ export const getStringDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ isEdit, originData }) => {
   const navigate = useNavigate();
 
   const [date, setDate] = useState(getStringDate(new Date()));
@@ -56,7 +56,7 @@ const DiaryEditor = () => {
   const [content, setContent] = useState('');
   const contentRef = useRef();
 
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
   const handleClickEmote = (emotion) => {
     setEmotion(emotion);
   };
@@ -67,13 +67,30 @@ const DiaryEditor = () => {
       return;
     }
 
-    onCreate(date, content, emotion);
+    if (
+      window.confirm(
+        isEdit ? 'Are you sure edit diary?' : 'Are you sure save diary?'
+      )
+    ) {
+      onCreate(date, content, emotion);
+    } else {
+      onEdit(originData.id, date, content, emotion);
+    }
     navigate('/', { replace: true });
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      setDate(getStringDate(new Date(parseInt(originData.date))));
+      setEmotion(originData.emotion);
+      setContent(originData.content);
+    }
+  }, [isEdit, originData]);
+
   return (
     <div className='DiaryEditor'>
       <MyHeader
-        headText={'New Diary'}
+        headText={isEdit ? 'Edit Diary' : 'New Diary'}
         leftChild={<MyButton text={'< Back'} onClick={() => navigate(-1)} />}
       />
       <div>
