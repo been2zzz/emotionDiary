@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DiaryDispatchContext } from './../App';
 
@@ -18,9 +18,10 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const contentRef = useRef();
 
   const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
-  const handleClickEmote = (emotion) => {
+
+  const handleClickEmote = useCallback((emotion) => {
     setEmotion(emotion);
-  };
+  }, []);
 
   const handleSumbit = () => {
     if (content.length < 1) {
@@ -33,9 +34,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
         isEdit ? 'Are you sure edit diary?' : 'Are you sure save diary?'
       )
     ) {
-      onCreate(date, content, emotion);
-    } else {
       onEdit(originData.id, date, content, emotion);
+    } else {
+      onCreate(date, content, emotion);
     }
     navigate('/', { replace: true });
   };
@@ -108,11 +109,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
         <section>
           <div className='control-box'>
             <MyButton text={'Cancel'} onClick={() => navigate(-1)} />
-            <MyButton
-              text={'Complete'}
-              type={'positive'}
-              onClick={handleSumbit}
-            />
+            <MyButton text={'Save'} type={'positive'} onClick={handleSumbit} />
           </div>
         </section>
       </div>
