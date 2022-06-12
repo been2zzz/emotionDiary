@@ -13,6 +13,11 @@ const Home = () => {
   const headText = `${currentDate.getFullYear()}.${currentDate.getMonth() + 1}`;
 
   useEffect(() => {
+    const titleElement = document.getElementsByTagName('title')[0];
+    titleElement.innerHTML = `Emotion Diary!`;
+  });
+
+  useEffect(() => {
     if (diaryList.length >= 1) {
       const firstDay = new Date(
         currentDate.getFullYear(),
