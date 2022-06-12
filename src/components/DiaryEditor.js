@@ -6,6 +6,8 @@ import MyButton from '../components/MyButton';
 import MyHeader from '../components/MyHeader';
 import EmotionItem from './EmotionItem';
 
+import { getStringDate } from '../util/date';
+
 const emotionList = [
   {
     emotion_id: 1,
@@ -33,20 +35,6 @@ const emotionList = [
     emotion_descript: 'Terrible',
   },
 ];
-
-export const getStringDate = (date) => {
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  if (month < 10) {
-    month = `0${month}`;
-  }
-  if (day < 10) {
-    day = `0${day}`;
-  }
-
-  return `${year}-${month}-${day}`;
-};
 
 const DiaryEditor = ({ isEdit, originData }) => {
   const navigate = useNavigate();
