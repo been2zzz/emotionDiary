@@ -34,14 +34,16 @@ const DiaryEditor = ({ isEdit, originData }) => {
         isEdit ? 'Are you sure edit diary?' : 'Are you sure save diary?'
       )
     ) {
-      onEdit(originData.id, date, content, emotion);
-    } else {
-      onCreate(date, content, emotion);
+      if (!isEdit) {
+        onCreate(date, content, emotion);
+      } else {
+        onEdit(originData.id, date, content, emotion);
+      }
     }
     navigate('/', { replace: true });
   };
 
-  const handleRemove = (targetId) => {
+  const handleRemove = () => {
     if (window.confirm('Are you sure delete diary?')) {
       onRemove(originData.id);
       navigate('/', { replace: true });
